@@ -1,0 +1,30 @@
+<mat-card class="column">
+  <mat-form-field appearance="fill">
+    <mat-label>Favorite Food</mat-label>
+    <mat-select [value]="selectedBrewer" (selectionChange)="onChange($event)">
+      <mat-option [value]="option" *ngFor="let option of data | brewers">{{
+        option
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div>
+    <mat-list>
+      <div mat-subheader>Folders</div>
+      <mat-list-item
+        *ngFor="let item of data | filter: selectedBrewer:selectedFilter"
+      >
+        <img
+          matListAvatar
+          [src]="item.image_url"
+          alt=""
+          (click)="openDialog(item)"
+        />
+        <h3 mat-line>{{ item.name }}</h3>
+        <div mat-line>
+          <span>{{ item.type }}</span>
+          <span>-- {{ item.price }}</span>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</mat-card>

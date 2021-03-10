@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Options</h2>
+<mat-dialog-content class="mat-typography">
+  <div style="display: flex">
+    <span>Dark Mode</span>
+    <span class="example-spacer"></span>
+    <mat-slide-toggle></mat-slide-toggle>
+  </div>
+  <p>
+    Default appearance:
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle value="bold">15</mat-button-toggle>
+      <mat-button-toggle value="italic">30</mat-button-toggle>
+    </mat-button-toggle-group>
+  </p>
+  <mat-form-field appearance="fill">
+    <mat-label>Favorite Food</mat-label>
+    <mat-select [value]="selectedFilter" (selectionChange)="onChange($event)">
+      <mat-option [value]="option.value" *ngFor="let option of filters">{{
+        option.viewValue
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
