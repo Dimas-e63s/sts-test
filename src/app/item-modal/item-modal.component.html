@@ -1,0 +1,15 @@
+<mat-dialog-content class="mat-typography">
+  <div class="item-modal">
+    <img [src]="data.item.image_url" alt="" />
+    <div class="item-modal__info">
+      <h2 mat-dialog-title>{{ data.item.name }}</h2>
+      <p>Brewer: {{ data.item.brewer }}</p>
+      <p>Type: {{ data.item.type }}</p>
+      <p>Category: {{ data.item.category }}</p>
+      <p>Price per litre: {{ data.item.price }} PLN</p>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button color="accent" mat-dialog-close>Close</button>
+</mat-dialog-actions>

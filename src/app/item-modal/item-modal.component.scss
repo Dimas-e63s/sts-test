@@ -1,0 +1,9 @@
+.item-modal {
+  display: flex;
+  flex-direction: row;
+  font-size: 1rem;
+
+  &__info {
+    margin-left: 1rem;
+  }
+}

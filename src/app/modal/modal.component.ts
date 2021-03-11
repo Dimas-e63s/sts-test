@@ -1,26 +1,58 @@
 import { Component, OnInit } from '@angular/core'
-import { Subject } from 'rxjs'
 import { FilterService } from '../filter.service'
+import { UtilsService } from '../shared/utils.service'
 
+interface filter {
+  value: string
+  viewValue: string
+}
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent implements OnInit {
-  filters = [
+  filters: filter[] = [
     { value: 'name', viewValue: 'Name' },
     { value: 'price', viewValue: 'Price' },
     { value: 'type', viewValue: 'Type' },
   ]
-  selectedFilterChanged = new Subject<string>()
-  selectedFilter = this.filters[0].value
-  constructor(private filterService: FilterService) {}
+  selectedFilter: string
+  selectedAmountAppearence: number
+  darkMode: boolean
+  constructor(
+    private filterService: FilterService,
+    private utilsService: UtilsService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const LSItem = 'filters'
+    this.selectedFilter = this.utilsService.checkPropertyInLS(
+      LSItem,
+      'typeFilter',
+      'name'
+    )
+    this.selectedAmountAppearence = this.utilsService.checkPropertyInLS(
+      LSItem,
+      'amountFilter',
+      15
+    )
+    this.darkMode = this.utilsService.checkPropertyInLS(
+      LSItem,
+      'isDarkMode',
+      false
+    )
+  }
 
   onChange({ value }) {
-    localStorage.setItem('filter', value)
-    this.filterService.filterTypeChanged.next(value)
+    this.filterService.changeFilterType(value)
+  }
+
+  onAmountChange({ value }) {
+    this.filterService.changeItemAmount(value)
+  }
+
+  onToggleChange({ checked }) {
+    this.filterService.changeDarkMode(checked)
   }
 }
