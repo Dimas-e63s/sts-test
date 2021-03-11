@@ -11,20 +11,18 @@
     <mat-list>
       <div mat-subheader>Folders</div>
       <mat-list-item
-        *ngFor="let item of data | filter: selectedBrewer:selectedFilter"
+        *ngFor="let item of filteredData | chunk: chunkDevider:chunkCount"
       >
-        <img
-          matListAvatar
-          [src]="item.image_url"
-          alt=""
-          (click)="openDialog(item)"
-        />
+        <img matListAvatar [src]="item.image_url" (click)="openDialog(item)" />
         <h3 mat-line>{{ item.name }}</h3>
         <div mat-line>
           <span>{{ item.type }}</span>
           <span>-- {{ item.price }}</span>
         </div>
       </mat-list-item>
+      <button mat-button *ngIf="isAnyMoreItems" (click)="onLoadMore()">
+        Load More
+      </button>
     </mat-list>
   </div>
 </mat-card>
