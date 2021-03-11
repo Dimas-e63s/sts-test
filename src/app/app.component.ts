@@ -1,4 +1,4 @@
-import { OverlayContainer } from '@angular/cdk/overlay'
+import { OverlayContainer } from '@angular/cdk/overlay';
 import {
   AfterViewInit,
   HostBinding,
@@ -8,11 +8,11 @@ import {
   ElementRef,
   Component,
   OnInit,
-} from '@angular/core'
-import { Subscription } from 'rxjs'
-import { DataService, responseData } from './data.service'
-import { FilterService } from './filter.service'
-import { UtilsService } from './shared/utils.service'
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ResponseData } from './shared/data.service';
+import { FilterService } from './shared/filter.service';
+import { UtilsService } from './shared/utils.service';
 
 @Component({
   selector: 'app-root',
@@ -20,55 +20,45 @@ import { UtilsService } from './shared/utils.service'
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
-  title = 'sts-test'
-  @ViewChild('cont') container: ElementRef
-  @HostBinding('class') root
-  data: responseData[]
-  className: string = 'darkMode'
-  error: string
-  private darkModeSubscription: Subscription
+  title = 'sts-test';
+  @ViewChild('cont') container: ElementRef;
+  @HostBinding('class') root;
+  data: ResponseData[];
+  className = 'darkMode';
+  error: string;
+  private darkModeSubscription: Subscription;
   constructor(
-    private dataService: DataService,
     private filterService: FilterService,
     private renderer: Renderer2,
     private overlay: OverlayContainer,
     private utilsService: UtilsService
   ) {}
 
-  ngOnInit() {
-    this.dataService.fetchData().subscribe(
-      (res) => {
-        this.data = res
-      },
-      (error) => {
-        this.error = error.message
-      }
-    )
-
+  ngOnInit(): void {
     this.darkModeSubscription = this.filterService.isDarkMode.subscribe(
       (darkMode) => {
-        darkMode ? this.toggleTheme('add') : this.toggleTheme('remove')
+        darkMode ? this.toggleTheme('add') : this.toggleTheme('remove');
       }
-    )
+    );
   }
 
-  toggleTheme(mode: 'add' | 'remove') {
-    this.renderer[`${mode}Class`](this.container.nativeElement, this.className)
-    this.overlay.getContainerElement().classList[mode](this.className)
+  toggleTheme(mode: 'add' | 'remove'): void {
+    this.renderer[`${mode}Class`](this.container.nativeElement, this.className);
+    this.overlay.getContainerElement().classList[mode](this.className);
   }
 
-  ngAfterViewInit() {
-    const isDarkMode = this.utilsService.checkPropertyInLS(
-      'filters',
-      'isDarkMode',
-      false
-    )
+  ngAfterViewInit(): void {
+    const isDarkMode = this.utilsService.checkPropertyInLS({
+      LSItem: 'filters',
+      propName: 'isDarkMode',
+      defVal: false,
+    });
     if (isDarkMode) {
-      this.toggleTheme('add')
+      this.toggleTheme('add');
     }
   }
 
-  ngOnDestroy() {
-    this.darkModeSubscription.unsubscribe()
+  ngOnDestroy(): void {
+    this.darkModeSubscription.unsubscribe();
   }
 }

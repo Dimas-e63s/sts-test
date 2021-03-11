@@ -1,21 +1,4 @@
 <div class="mat-app-background app-frame" #cont>
   <app-header></app-header>
-  <div class="container" *ngIf="data; else loading">
-    <app-column
-      [id]="item"
-      [data]="data"
-      *ngFor="let item of [1, 2, 3]"
-    ></app-column>
-  </div>
-  <ng-template #loading>
-    <div class="wrapper" *ngIf="!error">
-      <mat-spinner></mat-spinner>
-    </div>
-    <div *ngIf="error">
-      <div class="wrapper">
-        <h2>Something went wrong;( Please try later</h2>
-        <h3>{{ error }}</h3>
-      </div>
-    </div>
-  </ng-template>
+  <app-columns-container></app-columns-container>
 </div>

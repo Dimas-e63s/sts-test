@@ -1,4 +1,11 @@
-import { Injectable } from '@angular/core'
+import { Injectable } from '@angular/core';
+
+interface LSParametrs {
+  LSItem: string;
+  propName: string | number;
+  defVal?: string | boolean | number;
+  value?: string | boolean | number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -6,27 +13,19 @@ import { Injectable } from '@angular/core'
 export class UtilsService {
   constructor() {}
 
-  checkPropertyInLS(
-    LSPropName: string,
-    propName: string | number,
-    defaultValue: string | boolean | number
-  ) {
-    const filtersState = JSON.parse(localStorage.getItem(LSPropName))
+  checkPropertyInLS({ LSItem, propName, defVal }: LSParametrs) {
+    const filtersState = JSON.parse(localStorage.getItem(LSItem));
 
     return filtersState && filtersState[propName]
       ? filtersState[propName]
-      : defaultValue
+      : defVal;
   }
 
-  storeInLS(
-    LSItemName: string,
-    name: string | number,
-    value: string | boolean | number
-  ): void {
-    const previouseState = JSON.parse(localStorage.getItem(LSItemName))
+  storeInLS({ LSItem, propName, value }: LSParametrs): void {
+    const previouseState = JSON.parse(localStorage.getItem(LSItem));
     localStorage.setItem(
-      LSItemName,
-      JSON.stringify({ ...previouseState, [name]: value })
-    )
+      LSItem,
+      JSON.stringify({ ...previouseState, [propName]: value })
+    );
   }
 }

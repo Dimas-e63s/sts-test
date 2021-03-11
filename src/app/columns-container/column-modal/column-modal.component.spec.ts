@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ItemModalComponent } from './item-modal.component';
+import { ItemModalComponent } from './column-modal.component';
 
 describe('ItemModalComponent', () => {
   let component: ItemModalComponent;
@@ -8,9 +8,8 @@ describe('ItemModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ItemModalComponent ]
-    })
-    .compileComponents();
+      declarations: [ItemModalComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
