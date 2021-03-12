@@ -44,15 +44,15 @@ export class HeaderModalComponent implements OnInit {
     });
   }
 
-  onChange({ value }): void {
+  onChange({ value }: { value: string }): void {
     this.filterService.changeFilterType(value);
   }
 
-  onAmountChange({ value }): void {
+  onAmountChange({ value }: { value: number }): void {
     this.filterService.changeItemAmount(value);
   }
 
-  onToggleChange({ checked }): void {
+  onToggleChange({ checked }: { checked: boolean }): void {
     this.filterService.changeDarkMode(checked);
   }
 }

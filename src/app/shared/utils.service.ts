@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ResponseData } from './data.service';
 
 interface LSParametrs {
   LSItem: string;
@@ -27,5 +28,25 @@ export class UtilsService {
       LSItem,
       JSON.stringify({ ...previouseState, [propName]: value })
     );
+  }
+
+  toPricePerLitre(arr: ResponseData[]): ResponseData[] {
+    return arr.map((item) => {
+      const itemCopy = { ...item };
+      const updatedPrice = itemCopy.size
+        .split(' ')
+        .reduce((acc, next, idx, arr) => {
+          if (idx === 0) {
+            acc;
+            acc /= +next;
+          }
+          if (next.includes('ml')) {
+            const a = parseInt(next, 10);
+            acc = +((acc / parseInt(next, 10)) * 1000).toFixed(2);
+          }
+          return acc;
+        }, +item.price);
+      return { ...itemCopy, price: updatedPrice };
+    });
   }
 }

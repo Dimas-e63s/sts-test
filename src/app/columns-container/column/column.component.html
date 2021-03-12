@@ -1,5 +1,5 @@
 <mat-card class="column">
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="input--full-width">
     <mat-label>Favorite Food</mat-label>
     <mat-select [value]="selectedBrewer" (selectionChange)="onChange($event)">
       <mat-option [value]="option" *ngFor="let option of data | brewers">{{

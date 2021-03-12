@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { UtilsService } from './utils.service';
 
 export interface ResponseData {
   abv: string;
@@ -24,29 +25,13 @@ export interface ResponseData {
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private utilsService: UtilsService) {}
 
   fetchData(): Observable<ResponseData[]> {
     return this.http
       .get<ResponseData[]>('http://ontariobeerapi.ca/beers/')
       .pipe(
-        map((data) =>
-          data.map((item) => {
-            const itemCopy = { ...item };
-            const updatedPrice = itemCopy.size
-              .split(' ')
-              .reduce((acc, next, idx, arr) => {
-                if (idx === 0) {
-                  acc /= +next;
-                }
-                if (next.includes('ml')) {
-                  acc = +((acc / parseInt(next, 10)) * 1000).toFixed(2);
-                }
-                return acc;
-              }, +item.price);
-            return { ...itemCopy, price: updatedPrice };
-          })
-        ),
+        map((data) => this.utilsService.toPricePerLitre(data)),
         map((data) => data.sort((a, b) => (a.brewer > b.brewer ? 1 : -1))),
         catchError((errorRes) => throwError(errorRes))
       );

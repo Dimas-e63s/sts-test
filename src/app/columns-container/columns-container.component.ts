@@ -9,7 +9,6 @@ import { DataService, ResponseData } from '../shared/data.service';
 export class ColumnsContainerComponent implements OnInit {
   data: ResponseData[];
   error: string;
-  isLoading = false;
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {

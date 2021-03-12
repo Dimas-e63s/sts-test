@@ -26,7 +26,7 @@
       >
     </mat-button-toggle-group>
   </div>
-  <mat-form-field appearance="fill" style="width: 100%">
+  <mat-form-field appearance="fill" class="input--full-width">
     <mat-label>Select Type</mat-label>
     <mat-select [value]="selectedFilter" (selectionChange)="onChange($event)">
       <mat-option *ngFor="let option of filters" [value]="option.value">{{
